@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GPT3.5 Created Page</title>
+</head>
+<body>
+	<h1>This is created by GPT3.5</h1>
+	<p>Hello everyone! This simple webpage you are viewing right now is created by GPT3.5 - the latest version of the highly advanced artificial intelligence language model developed by OpenAI. GPT3.5 is capable of generating human-like text, making it possible to create websites, blogs, essays, and even books with minimal input from humans. </p>
+
+	<p>Thank you for visiting this page. Feel free to browse our site and learn more about the amazing capabilities of GPT3.5!</p>
+</body>
+</html>
