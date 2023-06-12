@@ -1,21 +1,210 @@
-As an AI language model, I cannot create websites. However, I can provide you with website development steps that you can follow to create your own website:
+Sorry, as an AI language model I don't have access to create web pages. However, I can provide you with a sample code for the dynamic web page with a red background where users can add and remove products from their cart.
 
-1. Choose a domain name: Your domain name should be unique and easy to remember.
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic Cart Page</title>
+<style type="text/css">
+	body {
+		background-color: red;
+		font-family: Arial, sans-serif;
+		padding: 0;
+		margin: 0;
+	}
+	h1 {
+		color: #fff;
+		text-align: center;
+		padding-top: 50px;
+	}
+	.container {
+		max-width: 960px;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.product {
+		width: 33.33%;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+	.product img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+	.product h2 {
+		font-size: 24px;
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	.product p {
+		font-size: 18px;
+		margin: 0;
+	}
+	.product button {
+		background-color: #fff;
+		color: red;
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.cart {
+		background-color: #fff;
+		padding: 20px;
+		box-sizing: border-box;
+		margin-top: 50px;
+		border-radius: 5px;
+	}
+	.cart h2 {
+		font-size: 24px;
+		margin-top: 0;
+	}
+	.cart ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.cart li {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+	}
+	.cart button {
+		background-color: red;
+		color: #fff;
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+	<h1>Welcome to Dynamic Cart Page</h1>
+	<div class="container">
+		<div class="product">
+			<img src="https://via.placeholder.com/400x400?text=Product+1" alt="Product 1">
+			<h2>Product 1</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			<button class="add-to-cart" data-product-id="1">Add to Cart</button>
+		</div>
+		<div class="product">
+			<img src="https://via.placeholder.com/400x400?text=Product+2" alt="Product 2">
+			<h2>Product 2</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			<button class="add-to-cart" data-product-id="2">Add to Cart</button>
+		</div>
+		<div class="product">
+			<img src="https://via.placeholder.com/400x400?text=Product+3" alt="Product 3">
+			<h2>Product 3</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			<button class="add-to-cart" data-product-id="3">Add to Cart</button>
+		</div>
+	</div>
+	<div class="cart">
+		<h2>Your Cart</h2>
+		<ul class="cart-items"></ul>
+		<button class="clear-cart">Clear Cart</button>
+	</div>
+<script type="text/javascript">
+	const products = [
+		{
+			id: 1,
+			name: "Product 1",
+			price: 10,
+			image: "https://via.placeholder.com/400x400?text=Product+1"
+		},
+		{
+			id: 2,
+			name: "Product 2",
+			price: 20,
+			image: "https://via.placeholder.com/400x400?text=Product+2"
+		},
+		{
+			id: 3,
+			name: "Product 3",
+			price: 30,
+			image: "https://via.placeholder.com/400x400?text=Product+3"
+		}
+	];
 
-2. Select a web hosting provider: There are numerous web hosting providers available, choose the one that best suits your budget and needs.
+	let cart = [];
 
-3. Install a Content Management System (CMS): Choose a CMS platform to build your website. Popular CMS options include WordPress, Shopify, and Magento.
+	const cartItems = document.querySelector(".cart-items");
 
-4. Choose an eCommerce theme: Pick an eCommerce theme that is relevant to your industry and easy to navigate.
+	const clearCartBtn = document.querySelector(".clear-cart");
 
-5. Install a payment gateway: Set up payment gateways like PayPal or Square to accept credit/debit card payments.
+	const addBtns = document.querySelectorAll(".add-to-cart");
 
-6. Add products: Start adding products to your website. Make sure to include accurate descriptions, prices, and images.
+	addBtns.forEach(addBtn => {
+		addBtn.addEventListener("click", () => {
+			const productId = parseInt(addBtn.dataset.productId);
+			const product = products.find(product => product.id === productId);
+			if (product) {
+				let item = cart.find(item => item.id === productId);
+				if (item) {
+					item.quantity++;
+				} else {
+					item = {
+						id: productId,
+						name: product.name,
+						price: product.price,
+						image: product.image,
+						quantity: 1
+					};
+					cart.push(item);
+				}
+				updateCart();
+			}
+		});
+	});
 
-7. Implement a shopping cart: Integrate a shopping cart feature that allows your customers to add/remove items to/from their cart.
+	clearCartBtn.addEventListener("click", () => {
+		cart = [];
+		updateCart();
+	});
 
-8. Optimize your website for search engines: Optimize your website by adding relevant keywords, meta tags, and meta descriptions.
+	function updateCart() {
+		cartItems.innerHTML = "";
+		cart.forEach(item => {
+			const itemEl = document.createElement("li");
+			const nameEl = document.createElement("span");
+			const priceEl = document.createElement("span");
+			const quantityEl = document.createElement("span");
+			const imageEl = document.createElement("img");
+			const removeBtn = document.createElement("button");
 
-9. Launch your website: Once you have completed all of the above steps, you can launch your website.
+			nameEl.textContent = item.name;
+			priceEl.textContent = `$${item.price.toFixed(2)}`;
+			quantityEl.textContent = `x${item.quantity}`;
+			imageEl.src = item.image;
+			removeBtn.textContent = "Remove";
+			removeBtn.dataset.productId = item.id;
 
-10. Test and update: Test your website thoroughly before launch and continue to update and make improvements as needed.
+			nameEl.classList.add("item-name");
+			priceEl.classList.add("item-price");
+			quantityEl.classList.add("item-quantity");
+
+			removeBtn.addEventListener("click", () => {
+				const index = cart.findIndex(i => i.id === item.id);
+				cart.splice(index, 1);
+				updateCart();
+			});
+
+			itemEl.appendChild(nameEl);
+			itemEl.appendChild(priceEl);
+			itemEl.appendChild(quantityEl);
+			itemEl.appendChild(removeBtn);
+			itemEl.appendChild(imageEl);
+
+			cartItems.appendChild(itemEl);
+		});
+	}
+
+	updateCart();
+</script>
+</body>
+</html> 
+
+Note: This is a sample code and it may need to be modified as per your requirements.
